@@ -1,0 +1,22 @@
+// save GUID of recarmed tracks
+// with SetExtState
+
+function save()
+(
+    persist = 0;
+    i = 0;
+    count = 0;
+    loop(CountTracks(0),
+        GetMediaTrackInfo_Value(GetTrack(0, i), "I_RECARM") === 1 ?
+        (
+            GetTrackGUID(#guid, GetTrack(0, i));
+            SetExtState("recarmed_tracks", sprintf(#, "%i", count), #guid, persist);
+            count += 1;
+        );
+        i += 1;
+    );
+    SetExtState("recarmed_tracks", "recarmed_track_count", sprintf(#, "%i", count), persist);
+    Main_OnCommand(40491, 0); // unarm all tracks
+);
+
+save();

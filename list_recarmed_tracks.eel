@@ -1,0 +1,66 @@
+// List all recarmed tracks and allow
+// user to unarm or leave armed
+
+function str(arg)
+(
+    sprintf(str, "%i", arg);
+);
+
+function save()
+(
+    persist = 0;
+    i = 0;
+    count = 0;
+    loop(CountTracks(0),
+        GetMediaTrackInfo_Value(GetTrack(0, i), "I_RECARM") === 1 ?
+        (
+            GetTrackGUID(#guid, GetTrack(0, i));
+            SetExtState("recarmed_tracks", sprintf(#, "%i", count), #guid, persist);
+            count += 1;
+        );
+        i += 1;
+    );
+    SetExtState("recarmed_tracks", "recarmed_track_count", sprintf(#, "%i", count), persist);
+    Main_OnCommand(40491, 0); // unarm all tracks
+);
+
+function list_recarmed_tracks()
+(
+    #armed = "";
+    i = 0;
+    loop(CountTracks(0),
+        tr = GetTrack(0, i);
+        GetMediaTrackInfo_Value(tr, "I_RECARM") === 1.0 ?
+        (
+            #name = "";
+            GetSetMediaTrackInfo_String(tr, "P_NAME", #name, 0);
+            
+            strlen(#name) == 0 ?
+            (
+                // if track has no name
+                // set name to track index
+                strcat(#name, str(i + 1));
+            );
+            
+            #armed += strcat(#name, "\n");;
+        );
+        i += 1;
+    );
+
+    strlen(#armed) > 0 ?
+    (
+        title = "Record armed tracks:";
+        msg = #armed += "\nWould you like to leave them armed?";
+
+        MB(msg, title, 4) === 7 ?
+        (
+            save();
+            Main_OnCommand(40491, 0); // unarm all tracks
+        );
+    ) :
+    (
+        MB("", "There are no record armed tracks", 0);
+    );
+);
+
+list_recarmed_tracks();

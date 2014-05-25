@@ -1,0 +1,32 @@
+// Trim volume of selected items
+// by the given amount in dBs
+
+function trim()
+(
+    num_items = CountSelectedMediaItems(0);
+    num_items > 0 ?
+    (
+        #user_input = "-6"; // default value
+        GetUserInputs("Trim item volume", 1, "Trim in dB:", #user_input) == 1 ?
+        (
+            Undo_BeginBlock2(0);
+            // convert string to float and store in dB
+            match("%f", #user_input, dB);
+            gain = pow(10, dB / 20);
+            i = 0;
+            loop(num_items,
+                item = GetSelectedMediaItem(0, i);
+                vol = GetMediaItemInfo_Value(item, "D_VOL");
+                SetMediaItemInfo_Value(item, "D_VOL", vol * gain);
+                i += 1;
+            );
+            Undo_EndBlock2(0, "Trim item volume", -1);
+            UpdateArrange();
+        );
+    ) :
+    (
+        ShowMessageBox("No items selected!", "Trim item volume", 0);
+    );
+);
+
+trim();

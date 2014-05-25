@@ -1,0 +1,33 @@
+/*
+ * Rename all takes of all selected items
+ * to the parent track name. Append take
+ * index for items with multiple takes.
+ */
+
+function rename()
+(
+    num_items = CountSelectedMediaItems(0);
+    i = 0;
+    loop(num_items,
+        item = GetSelectedMediaItem(0, i);
+        num_takes = CountTakes(item);
+        t = 0;
+        loop(num_takes,
+            take = GetMediaItemTake(item, t);
+            parent_track = GetMediaItem_Track(item);
+            GetSetMediaTrackInfo_String(parent_track, "P_NAME", #track_name, 0);
+            #take_name = #track_name;
+            t >= 1 ?
+            (
+                strcat(#take_name, "_");
+                strcat(#take_name, sprintf(#, "%i", t));
+            );
+            GetSetMediaItemTakeInfo_String(take, "P_NAME", #take_name, 1);
+            t += 1;
+        );
+        i += 1;
+        UpdateArrange(0);
+    );
+);
+
+rename();

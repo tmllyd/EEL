@@ -1,0 +1,16 @@
+function smart_split()
+(
+    start = 0;
+    end = 0;
+    GetSet_LoopTimeRange2(0, 0, 0, start, end, 0);
+
+    start === end ?
+    (
+        Main_OnCommand(41173, 0); // go to start of item
+    ) :
+    (
+        Main_OnCommand(40630, 0); // go to start of time sel
+    );
+);
+
+smart_split();

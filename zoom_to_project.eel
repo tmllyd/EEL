@@ -1,0 +1,16 @@
+// A better zoom to project
+// action ... zooms out
+// fully ... leaves less
+// empty space at the end
+
+function zoom_to_project()
+(
+    PreventUIRefresh(1);
+    Main_OnCommand(NamedCommandLookup("_SWS_SAVEALLSELITEMS1"), 0);
+    Main_OnCommand(40182, 0); // Item: Select all items
+    Main_OnCommand(NamedCommandLookup("_SWS_HZOOMITEMS"), 0);
+    Main_OnCommand(NamedCommandLookup("_SWS_RESTALLSELITEMS1"), 0);
+    PreventUIRefresh(-1);
+);
+
+zoom_to_project();

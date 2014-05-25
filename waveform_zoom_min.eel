@@ -1,0 +1,12 @@
+// zoom waveform height out fully
+
+function default_waveform_height()
+(
+    PreventUIRefresh(1);
+    loop(50,
+        Main_OnCommand(40156, 0); // Item Peaks: Decrease view gain
+    );
+    PreventUIRefresh(-1);
+);
+
+default_waveform_height();

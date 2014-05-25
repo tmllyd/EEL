@@ -1,0 +1,65 @@
+function str(i) (
+    sprintf(#, "%f", i);
+);
+
+#leftmost_edge = 0;
+#rightmost_edge = 0;
+
+function ripple()
+(
+    sel_items = CountSelectedMediaItems(0);
+    i = 0;
+    loop(sel_items,
+        sel_item = GetMediaItem(0, i);
+
+        left_edge = GetMediaItemInfo_Value(sel_item, "D_POSITION");
+        right_edge = GetMediaItemInfo_Value(sel_item, "D_LENGTH") + left_edge;
+
+        left_edge < leftmost_edge ? (
+            leftmost_edge = left_edge;
+        );
+
+        right_edge > rightmost_edge ? (
+            rightmost_edge = right_edge;
+        );
+        i += 1;
+    );
+    
+
+
+
+    // num_items = CountMediaItems(0);
+    // j = 0;
+    // loop(num_items,
+    //     item = GetMediaItem(0, j);
+    //     !GetMediaItemInfo_Value(item, "B_UISEL") ? (
+    //         any_left_edge = GetMediaItemInfo_Value(item, "D_POSITION");
+    //         any_right_edge = GetMediaItemInfo_Value(item, "D_LENGTH") + left_edge;
+    //         any_left_edge < leftmost_edge ? (
+    //             // move left edge if leftmost_edge changes
+    //             SetMediaItemPosition(item, new_pos, 1);
+    //         );
+    //         any_right_edge > rightmost_edge ? (
+    //             // move right edge if rightmost_edge changes
+    //             SetMediaItemLength(item, new_len, 1);
+    //         );
+
+    //     );
+
+
+
+    //     j += 1;
+    // );
+
+
+
+
+
+
+
+
+
+    defer("ripple();");
+);
+
+ripple();

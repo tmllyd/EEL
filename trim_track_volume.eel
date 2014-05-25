@@ -1,0 +1,32 @@
+// Trim volume of selected tracks
+// by the given amount in dBs
+
+function trim()
+(
+    num_tracks = CountTracks(0);
+    num_tracks > 0 ?
+    (
+        #user_input = "-6"; // default value
+        GetUserInputs("Trim track volume", 1, "Trim in dB:", #user_input) == 1 ?
+        (
+            Undo_BeginBlock2(0);
+            // convert string to float and store in dB
+            match("%f", #user_input, dB);
+            gain = pow(10, dB / 20);
+            i = 0;
+            loop(num_tracks,
+                tr = GetSelectedTrack(0, i);
+                vol = GetMediaTrackInfo_Value(tr, "D_VOL");
+                SetMediaTrackInfo_Value(tr, "D_VOL", vol * gain);
+                i += 1;
+            );
+            Undo_EndBlock2(0, "Trim track volume", -1);
+            UpdateArrange();
+        );
+    ) :
+    (
+        ShowMessageBox("No tracks selected!", "Trim track volume", 0);
+    );
+);
+
+trim();

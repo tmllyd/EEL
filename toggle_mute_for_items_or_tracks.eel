@@ -1,0 +1,26 @@
+// toggle mute of selected items, tracks
+// or nevelope depending on cursor context
+
+function toggle_mute()
+(
+    Undo_BeginBlock2(0);
+
+    context = GetCursorContext();
+    context == 0 ?
+    (
+        Main_OnCommand(40280, 0); // toggle track mute
+        Undo_EndBlock2(0, "Toggle track mute", -1);
+    );
+    context == 1 ?
+    (
+        Main_OnCommand(40175, 0); // toggle item mute
+        Undo_EndBlock2(0, "Toggle item mute", -1);
+    );
+    context == 2 ?
+    (
+        Main_OnCommand(40883, 0); // toggle envelope bypass
+        Undo_EndBlock2(0, "Toggle envelope bypass", -1);
+    );
+);
+
+toggle_mute();

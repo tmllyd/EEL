@@ -1,0 +1,28 @@
+// get saved track GUIDs GetExtState
+// and use to reselect tracks
+
+function restore()
+(
+    PreventUIRefresh(1);
+    Main_OnCommand(40491, 0); // unarm all tracks
+    GetExtState(#recarmed_track_count, "recarmed_tracks", "recarmed_track_count");
+    match("%i", #recarmed_track_count, count); // convert string to int
+    
+    i = 0;
+    loop(CountTracks(0),
+        GetTrackGUID(#guid, GetTrack(0, i));
+        j = 0;
+        loop(count,
+            GetExtState(#saved_guid, "recarmed_tracks", sprintf(#, "%i", j));
+            stricmp(#guid, #saved_guid) == 0 ?
+            (
+                SetMediaTrackInfo_Value(GetTrack(0, i), "I_RECARM", 1);
+            );
+            j += 1;
+        );
+        i += 1;
+    );
+    PreventUIRefresh(-1);
+);
+
+restore();

@@ -1,0 +1,21 @@
+function folder()
+(
+    PreventUIRefresh(1);
+
+    Undo_BeginBlock2(0);
+
+    Main_OnCommand(NamedCommandLookup("_SWS_SAVESEL"), 0);
+    Main_OnCommand(NamedCommandLookup("_SWS_INSRTTRKABOVE"), 0);
+    Main_OnCommand(NamedCommandLookup("_SWS_RESTORESEL"), 0);
+    Main_OnCommand(NamedCommandLookup("_XENAKIOS_SELPREVTRACKKEEP"), 0);
+    Main_OnCommand(NamedCommandLookup("_SWS_MAKEFOLDER"), 0);
+    Main_OnCommand(40914 ,0); // Set first selected track as last touched track
+    Main_OnCommand(40505, 0); // Select last touched track
+    Main_OnCommand(NamedCommandLookup("_SWS_AWPANDUALPAN"), 0);
+    
+    PreventUIRefresh(-1);
+
+    Undo_EndBlock2(0, "Create folder for selected tracks", -1);
+);
+
+folder();

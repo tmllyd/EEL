@@ -1,0 +1,24 @@
+// Reset volume of selected tracks
+// to 0dB
+
+function trim()
+(
+    num_tracks = CountSelectedTracks(0);
+    num_tracks > 0 ?
+    (
+        Undo_BeginBlock(0);
+        i = 0;
+        loop(num_tracks,
+            tr = GetSelectedTrack(0, i);
+            SetMediaTrackInfo_Value(tr, "D_VOL", 1.0);
+            i += 1;
+        );
+        Undo_EndBlock2(0, "Reset track volume to 0dB", -1);
+        UpdateArrange();
+    ) :
+    (
+        ShowMessageBox("No tracks selected!", "Reset track volume to 0dB", 0);
+    );
+);
+
+trim();

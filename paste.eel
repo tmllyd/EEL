@@ -1,0 +1,11 @@
+// wrapper for the sws/aw paste function
+// to prevent its UI refreshing
+
+function paste()
+(
+    PreventUIRefresh(1);
+    Main_OnCommand(NamedCommandLookup("_SWS_AWPASTE"), 0);
+    PreventUIRefresh(-1);
+);
+
+paste();

@@ -1,0 +1,24 @@
+// Reset volume of selected items
+// to 0dB
+
+function trim()
+(
+    num_items = CountSelectedMediaItems(0);
+    num_items > 0 ?
+    (
+        Undo_BeginBlock2(0);
+        i = 0;
+        loop(num_items,
+            item = GetSelectedMediaItem(0, i);
+            SetMediaItemInfo_Value(item, "D_VOL", 1.0);
+            i += 1;
+        );
+        Undo_EndBlock2(0, "Reset item volume to 0dB", -1);
+        UpdateArrange();
+    ) :
+    (
+        ShowMessageBox("No items selected!", "Reset item volume to 0dB", 0);
+    );
+);
+
+trim();

@@ -1,0 +1,21 @@
+// toggle mute of selected items, tracks
+// or nevelope depending on cursor context
+
+function toggle_solo()
+(
+    Undo_BeginBlock2(0);
+
+    context = GetCursorContext();
+    context == 0 ?
+    (
+        Main_OnCommand(7, 0); // toggle track mute
+        Undo_EndBlock2(0, "Toggle track solo", -1);
+    );
+    context == 1 ?
+    (
+        Main_OnCommand(41561, 0); // toggle item mute
+        Undo_EndBlock2(0, "Toggle item solo", -1);
+    );
+);
+
+toggle_solo();

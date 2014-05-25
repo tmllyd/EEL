@@ -1,0 +1,17 @@
+function insert_fx()
+(
+    fx = "ReaEQ";
+    i = 0;
+    Undo_BeginBlock();
+    loop(CountSelectedTracks(0),
+        track = GetSelectedTrack(0, i);
+        fx_idx = TrackFX_GetByName(track, fx, 1);
+        is_open = !TrackFX_GetOpen(track, fx_idx);
+        TrackFX_SetOpen(track, fx_idx, is_open);
+        i += 1;
+    );
+    #undo_msg = "Insert ";
+    Undo_EndBlock(strcat(#undo_msg, fx), 0);
+);
+
+insert_fx();

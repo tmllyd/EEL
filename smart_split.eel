@@ -1,0 +1,24 @@
+// ----------------------------------
+// If time selection exists
+// split at time selection (xfades enclosed)
+// otherwise split with xfade on left
+// ----------------------------------
+
+function smart_split()
+(
+    start = 0;
+    end = 0;
+    GetSet_LoopTimeRange2(0, 0, 0, start, end, 0);
+    
+    start === end ?
+    (
+        // there is no time selection
+        Main_OnCommand(NamedCommandLookup("_SWS_AWSPLITXFADELEFT"), 0);
+    ) :
+    (
+        Main_OnCommand(40927, 0); // enable xfade
+        Main_OnCommand(40061, 0); // split at time selection
+    );
+);
+
+smart_split();

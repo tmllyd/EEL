@@ -1,0 +1,13 @@
+// Needs to be modified to ignore regions
+
+function demo()
+(
+	i = 0;
+	loop(CountProjectMarkers(0, 0, 0),
+		EnumProjectMarkers3(0, i, 0, 0, 0, #nameOut, 0, 0);
+		ShowConsoleMsg(strcat(#nameOut, "\n"));
+		i += 1;
+	);
+);
+
+demo();

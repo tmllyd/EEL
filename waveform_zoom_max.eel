@@ -1,0 +1,12 @@
+// zoom waveform to max
+
+function default_waveform_height()
+(
+    PreventUIRefresh(1);
+    loop(50,
+        Main_OnCommand(40155, 0); // Item Peaks: Increase view gain
+    );
+    PreventUIRefresh(-1);
+);
+
+default_waveform_height();

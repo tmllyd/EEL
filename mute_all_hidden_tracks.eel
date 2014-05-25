@@ -1,0 +1,22 @@
+// Mute all tracks that are hidden
+// in the tcp or in the mcp
+
+function mute_hidden()
+(
+    Undo_BeginBlock2(0);
+    i = 0;
+    loop(CountTracks(0),
+        tr = GetTrack(0, i);
+        tcp = GetMediaTrackInfo_Value(tr, "B_SHOWINTCP");
+        mcp = GetMediaTrackInfo_Value(tr, "B_SHOWINMIXER");
+
+        tcp & mcp == 0 ?
+        (
+            SetMediaTrackInfo_Value(tr, "B_MUTE", 1);  
+        );
+        i += 1;
+    );
+    Undo_EndBlock2(0, "Mute all hidden tracks", -1);
+);
+
+mute_hidden();

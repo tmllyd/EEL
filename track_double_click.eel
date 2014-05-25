@@ -1,0 +1,17 @@
+function double_click()
+(
+    tr = GetSelectedTrack(0, 0);
+    folder_depth = GetMediaTrackInfo_Value(tr, "I_FOLDERDEPTH");
+    folder_depth === 1 ? (
+        // track is folder parent so
+        // select folder's child tracks
+        Main_OnCommand(NamedCommandLookup("_SWS_SELCHILDREN2"), 0);
+        // select all items in track
+        Main_OnCommand(40421, 0);
+    ) : // track is folder child
+    (
+        Main_OnCommand(40421, 0); // select all items in track
+    );
+);
+
+double_click();
