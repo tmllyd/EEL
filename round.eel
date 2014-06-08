@@ -1,0 +1,16 @@
+function str(arg)
+(
+    sprintf(str, "%f", arg);
+);
+
+function round(num, dp)
+(
+	scale = pow(10, dp);
+	result = floor(num * scale + 0.500001);
+	num = result / scale;
+);
+
+rounded = round(2.0005, 4);
+
+ShowConsoleMsg(str(rounded));
+ShowConsoleMsg("\n")
